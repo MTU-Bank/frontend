@@ -1,0 +1,2 @@
+# frontend
+Фронтэнд для MTUBank
