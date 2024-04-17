@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="assets/login.css">
+    
+    <script type="text/javascript" src="../assets/js/jquery-3.7.1.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTUBank - Универсальный банк для всех Ваших нужд</title>
+</head>
+<body>
+    <div id="particles-js"></div>
+
+    <div id="login-box">
+        <div id="loginForm">
+            <p class="default_text centered_horizontally bigger_text big_margin">Войдите в свой аккаунт</p>
+            <hr>
+            <p class="default_text">Номер телефона:</p>
+            <input type="tel" id="phonenum" name="phonenum" class="phonenum" inputmode="numeric"></input>
+            <p class="default_text">Пароль:</p>
+            <input type="password" id="pwd" name="pwd" placeholder="••••••••••••••"></input>
+
+            <button class="defaultBtn centered_horizontally top_margin">Выполнить вход</button>
+
+            <p class="default_text centered_horizontally top_margin"><a href="javascript:void(0)" class="newAccount">У меня ещё нет аккаунта...</a></p>
+        </div>
+        <div id="registerForm" class="hidden">
+            <p class="default_text centered_horizontally bigger_text big_margin">Создайте аккаунт</p>
+            <hr>
+            <p class="default_text">Номер телефона:</p>
+            <input type="tel" id="phonenumReg" name="phonenumReg" class="phonenum" inputmode="numeric"></input>
+            <p class="default_text">Электронная почта:</p>
+            <input type="text" id="emailReg" name="emailReg" placeholder="your_mail@mail.ru" inputmode="email"></input>
+            <p class="default_text">Имя:</p>
+            <input type="text" id="fname" name="fname" placeholder="Иван"></input>
+            <p class="default_text">Фамилия:</p>
+            <input type="text" id="lname" name="lname" placeholder="Иванов"></input>
+            <p class="default_text">Отчество:</p>
+            <input type="text" id="mname" name="mname" placeholder="Иванович"></input>
+
+            <button class="defaultBtn centered_horizontally top_margin" id="continueRegister">Продолжить регистрацию...</button>
+
+            <p class="default_text centered_horizontally top_margin"><a href="javascript:void(0)" class="newAccount">У меня есть аккаунт</a></p>
+        </div>
+        <div id="registerForm_part2" class="hidden">
+            <p class="default_text centered_horizontally bigger_text big_margin">Ещё чуть-чуть...</p>
+            <hr>
+            <p class="default_text">Придумайте пароль:</p>
+            <input type="password" id="pwdReg" name="pwdReg" placeholder="••••••••••••••"></input>
+            <p class="default_text">Повторите пароль:</p>
+            <input type="password" id="pwdRegRep" name="pwdRegRep" placeholder="••••••••••••••"></input>
+            <p class="default_text">Выберите Ваш пол:</p>
+            <select id="sex" name="sex">
+                <option value="Male">Мужской</option>
+                <option value="Female">Женский</option>
+            </select>
+
+            <button class="defaultBtn centered_horizontally top_margin" id="createAccountBtn">Создать аккаунт</button>
+
+            <p class="default_text centered_horizontally top_margin"><a href="javascript:void(0)" id="prevStep">Вернуться на предыдущий этап</a></p>
+        </div>
+    </div>
+
+    <div class="alertBox">
+        <span class="closebtn" onclick="this.parentElement.className='alertBox hiddenAlertBox';">&times;</span> 
+        <strong>ОШИБКА!</strong> <span id="alertBoxText">Boo!</span>
+    </div>
+
+    <script src="../assets/js/particles.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="assets/login.js"></script>
+</body>
+</html>
