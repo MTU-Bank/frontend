@@ -1,14 +1,4 @@
-function error(text) {
-    $("#alertBoxText").text(text);
-    $(".alertBox").removeClass("hiddenAlertBox");
-    $(".alertBox").addClass("shownAlertBox");
-    setTimeout(hideError, 3000);
-}
-
-function hideError() {
-    $(".alertBox").removeClass("shownAlertBox");
-    $(".alertBox").addClass("hiddenAlertBox");
-}
+addErrorPopup();
 
 function ProcessDataForErrors(data) {
     if (data.Success != null && data.Success == false) {
@@ -17,6 +7,12 @@ function ProcessDataForErrors(data) {
         return true;
     }
     return false;
+}
+
+function show2FARequest(token) {
+    // show a modal window
+    $("#twofa-box").removeClass("hidden");
+    $("#twofa-box").data("token", token);
 }
 
 // handler for phone number input field
@@ -104,6 +100,11 @@ $("#createAccountBtn").on("click", function() {
         return;
     }
 
+    // локаем батн
+    let currObj = $(this);
+    currObj.prop("disabled", true);
+    currObj.text("Создаём ваш Личный Кабинет...");
+
     // делаем запрос почему бы и нет
     let registerObject = {
         FirstName: fname,
@@ -118,8 +119,145 @@ $("#createAccountBtn").on("click", function() {
         type: 'POST',
         url: APImethod("/api/registerUser"),
         data: JSON.stringify(registerObject),
-        success: function(data) { 
-            if (ProcessDataForErrors(data)) return;
+        success: function(data) {
+            if (ProcessDataForErrors(data)) {
+                currObj.prop("disabled", false);
+                currObj.text("Создать аккаунт");
+                return;
+            }
+
+            // assume success!! woo
+            // extract token
+            setToken(data.Token);
+            // redirect to control panel
+            window.location = "/cp";
+        },
+        contentType: "application/json",
+        dataType: 'json'
+    });
+});
+
+// do auth
+$("#doLogin").on("click", function() {
+    let phone = $("#phonenum").val();
+    let pwd = $("#pwd").val();
+
+    if (phone === null || phone == "+" || phone.length < 6) {
+        error("Некорректный номер телефона");
+        return;
+    }
+    if (pwd === null || pwd.length == 0) {
+        error("Введите пароль!");
+        return;
+    }
+
+    // лочим кнопку Т_Т
+    let currObj = $(this);
+    currObj.prop("disabled", true);
+    currObj.text("Входим в Личный Кабинет...");
+
+    // делаем запрос с объектом
+    let loginObj = {
+        Phone: phone,
+        Password: pwd
+    };
+    $.ajax({
+        type: 'POST',
+        url: APImethod("/api/loginUser"),
+        data: JSON.stringify(loginObj),
+        success: function(data) {
+            if (ProcessDataForErrors(data)) {
+                currObj.prop("disabled", false);
+                currObj.text("Выполнить вход");
+                return;
+            }
+
+            // check if 2FA is required
+            if (data.TwoFARequired) {
+                // show modal window for 2FA
+                show2FARequest(data.TwoFAToken);
+            } else {
+                // successful auth
+                // extract token
+                setToken(data.Token);
+                // redirect to control panel
+                window.location = "/cp";
+            }
+        },
+        contentType: "application/json",
+        dataType: 'json'
+    });
+});
+
+// handler for 2FA inputs
+$(".twofa-digit").on("input", function (e) {
+    let newChar = e.originalEvent.data;
+    let val = $(this).val();
+    let currentNum = parseInt($(this).attr("num"));
+
+    if (val.length > 1) {
+        // only leave the new character
+        $(this).val(newChar);
+    }
+
+    // move to the next number
+    $(`.twofa-digit[num="${currentNum + 1}"]`).focus();
+});
+
+$(".twofa-digit").on("paste", function (e) {
+    e.stopPropagation();
+
+    let pastedData = e.originalEvent.clipboardData.getData('text');
+
+    if (pastedData.length == 6) {
+        // fill it into all the fields
+        for (let i = 0; i < 6; i++) {
+            $(`.twofa-digit[num="${i + 1}"]`).val(pastedData[i]);
+        }
+    }
+    return false;
+});
+
+// confirm 2FA button
+$("#check2FA").on("click", function () {
+    let token = $(this).parent("#twofa-box").data("token");
+
+    let digits = "";
+    $('.twofa-digit').each(function(i, obj) {
+        digits += $(obj).val();
+    });
+
+    if (digits.length != 6){
+        error("Введите 2FA код!");
+        return;
+    }
+
+    // лок бат
+    let currObj = $(this);
+    currObj.prop("disabled", true);
+    currObj.text("Проверяем код...");
+
+    // делаем запрос
+    let fatwo = {
+        TwoFAValue: digits
+    };
+    $.ajax({
+        type: 'POST',
+        url: APImethod("/api/2FA"),
+        data: JSON.stringify(fatwo),
+        beforeSend: function (xhr) { setTokenXHR(xhr, token); },
+        success: function(data) {
+            if (ProcessDataForErrors(data)) {
+                currObj.prop("disabled", false);
+                currObj.text("Подтвердить вход");
+                return;
+            }
+
+            // assume success!! yay
+            // extract token
+            setToken(data.Token);
+            // redirect to control panel
+            window.location = "/cp";
         },
         contentType: "application/json",
         dataType: 'json'

@@ -42,6 +42,14 @@ body {
     border: 2px solid darkblue;
 }
 
+button:disabled,
+button[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+  pointer-events:none;
+}
+
 .defaultBtn:hover {
     background-color: white;
     color: black;
@@ -270,6 +278,13 @@ a:active {
         width: 100%;
         height: auto;
         object-fit: contain;
+    }
+
+    .downsizeIfNotBig {
+        font-size: small !important;
+        font-weight: 900 !important;
+        width: 5ch !important;
+        height: 5ch !important;
     }
 }
 

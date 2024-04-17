@@ -3,6 +3,36 @@ function APImethod(method) {
   return `${baseAPIdomain}${method}`;
 }
 
+function getToken() {
+  return localStorage.getItem("authToken");
+}
+
+function setToken(token) {
+  localStorage.setItem("authToken", token);
+}
+
+function setTokenXHR(xhr, token=null) {
+  if (token == null) token = getToken();
+  xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+}
+
+function error(text) {
+  $("#alertBoxText").text(text);
+  $(".alertBox").removeClass("hiddenAlertBox");
+  $(".alertBox").addClass("shownAlertBox");
+  setTimeout(hideError, 3000);
+}
+
+function hideError() {
+  $(".alertBox").removeClass("shownAlertBox");
+  $(".alertBox").addClass("hiddenAlertBox");
+}
+
+function addErrorPopup() {
+  divAlert = $(`<div class="alertBox"><span class="closebtn" onclick="this.parentElement.className='alertBox hiddenAlertBox';">&times;</span> <strong>ОШИБКА!</strong> <span id="alertBoxText">Boo!</span></div>`);
+  $("body").append(divAlert);
+}
+
 particlesJS('particles-js',
   
   {
