@@ -33,6 +33,15 @@ function addErrorPopup() {
   $("body").append(divAlert);
 }
 
+function ProcessDataForErrors(data) {
+  if (data.Success != null && data.Success == false) {
+      let errorMsg = data.Error;
+      if (errorMsg) error(errorMsg);
+      return true;
+  }
+  return false;
+}
+
 particlesJS('particles-js',
   
   {

@@ -1,0 +1,60 @@
+#cp-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85%;
+    height: 85%;
+    border: 4px solid darkblue;
+    background-color: #ffffffee;
+    padding: 25px;
+    color: black;
+    font-family: Comfortaa,cursive;
+}
+
+.contentContainerLoading {
+    display: none;
+}
+
+.loadingText {
+    position: absolute; /* Absolute positioning for the span */
+    top: 50%; /* Move the span to the vertical center */
+    left: 50%; /* Move the span to the horizontal center */
+    transform: translate(-50%, -50%); /* Adjust for the span's dimensions */
+}
+
+.loadingTextContainer {
+    display: flex; /* Use flexbox layout */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+
+.flexForCP {
+    display: flex;
+    height: 100%; /* 100% of the viewport height */
+}
+
+.left-panel {
+    flex: 0 0 25%; /* Occupy 25% of the width, but not grow or shrink */
+    height: 100%; /* 100% of the container height */
+}
+
+.right-panel {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    flex: 1; /* Take up remaining space */
+}
+
+#contentContainer {
+    width: 100%;
+    height: 100%;
+}
+
+.top-right-panel {
+    flex: 0 0 auto; /* Occupy 20% of the height, but not grow or shrink */
+    min-height: 20%; /* Minimum height of 20% of the container */
+}
+
+.bottom-right-panel {
+    flex: 1; /* Take up remaining space */
+}

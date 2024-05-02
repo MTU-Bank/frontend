@@ -1,14 +1,5 @@
 addErrorPopup();
 
-function ProcessDataForErrors(data) {
-    if (data.Success != null && data.Success == false) {
-        let errorMsg = data.Error;
-        if (errorMsg) error(errorMsg);
-        return true;
-    }
-    return false;
-}
-
 function show2FARequest(token) {
     // show a modal window
     $("#twofa-box").removeClass("hidden");

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="assets/cp.css">
     
     <script type="text/javascript" src="../assets/js/jquery-3.7.1.js"></script>
     <meta charset="UTF-8">
@@ -11,8 +12,33 @@
 <body>
     <div id="particles-js"></div>
 
+    <div id="cp-box" class="loadingTextContainer">
+        <span id="welcomeText" class="default_text centered_horizontally bigger_text loadingText">
+            Загружаем ваши финансовые успехи... Пожалуйста, подождите...
+        </span>
+        <div id="contentContainer" class="contentContainerLoading">
+            <hr>
+            <div class="flexForCP">
+                <div class="left-panel">
+                    Ваши счета:
+                    <!-- Left panel content (list of accounts) -->
+                </div>
+                <div class="right-panel">
+                    <div class="top-right-panel">
+                        Информация о ваших счетах: / Информация о вашем счёте:
+                        <!-- Top right panel content (account details) -->
+                    </div>
+                    <div class="bottom-right-panel">
+                        Недавние транзакции:
+                        <!-- Bottom right panel content (account transactions) -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="../assets/js/particles.js"></script>
     <script src="../assets/js/main.js"></script>
-    <script src="../assets/js/controlPanel.js"></script>
+    <script src="assets/controlPanel.js"></script>
 </body>
 </html>
