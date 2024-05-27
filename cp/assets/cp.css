@@ -58,3 +58,12 @@
 .bottom-right-panel {
     flex: 1; /* Take up remaining space */
 }
+
+.balInfoFlex {
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+
+    font-size: xx-large;
+}
